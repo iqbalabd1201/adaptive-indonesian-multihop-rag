@@ -20,6 +20,7 @@ The main pipeline consists of:
 4. Adaptive retrieval based on predicted complexity.
 5. Answer generation using retrieved supporting documents.
 6. Evaluation using Exact Match, F1-score, BERTScore, and LLM-as-Judge.
+7. Error analysis for qualitative evaluation.
 
 ## Repository Structure
 
@@ -43,11 +44,13 @@ adaptive-indonesian-multihop-rag/
 │   └── evaluate_llm_judge.py
 ├── examples/
 │   ├── sample_prompt.txt
-│   ├── sample_output.json
+│   ├── sample_pipeline_output.json
 │   ├── sample_bertscore_output.json
-│   └── sample_llm_judge_output.json
+│   ├── sample_llm_judge_output.json
+│   └── sample_error_analysis.json
 └── docs/
-    └── experiment_summary.md
+    ├── experiment_summary.md
+    └── error_analysis.md
 ```
 
 ## Pipeline Steps
@@ -257,6 +260,12 @@ Example:
 python src/run_full_pipeline.py
 ```
 
+Example output:
+
+```text
+examples/sample_pipeline_output.json
+```
+
 Note: The public artifact provides the cleaned pipeline structure. Local paths, checkpoints, datasets, and API keys are intentionally excluded.
 
 ## 7. Semantic Evaluation with BERTScore
@@ -323,18 +332,49 @@ Example output:
 examples/sample_llm_judge_output.json
 ```
 
+## 9. Error Analysis
+
+Error analysis is used to inspect qualitative cases from the full pipeline output.
+
+Files:
+
+```text
+docs/error_analysis.md
+examples/sample_error_analysis.json
+```
+
+The error analysis covers examples such as:
+
+* lexical mismatch,
+* entity name variation,
+* translation variation,
+* incomplete retrieval but correct answer,
+* wrong answer despite correct retrieval.
+
+This analysis helps explain why Exact Match can underestimate answer correctness in Indonesian multi-hop QA.
+
 ## Example Files
 
 The `examples/` directory provides small documentation-only samples:
 
-| File                           | Description                             |
-| ------------------------------ | --------------------------------------- |
-| `sample_prompt.txt`            | Example answer generation prompt format |
-| `sample_output.json`           | Example full-pipeline output            |
-| `sample_bertscore_output.json` | Example BERTScore evaluation output     |
-| `sample_llm_judge_output.json` | Example LLM-as-Judge evaluation output  |
+| File                           | Description                              |
+| ------------------------------ | ---------------------------------------- |
+| `sample_prompt.txt`            | Example answer generation prompt format  |
+| `sample_pipeline_output.json`  | Example full-pipeline output             |
+| `sample_bertscore_output.json` | Example BERTScore evaluation output      |
+| `sample_llm_judge_output.json` | Example LLM-as-Judge evaluation output   |
+| `sample_error_analysis.json`   | Example qualitative error analysis cases |
 
 Full experiment outputs are not included because they contain 8,000 samples and may include long retrieved contexts.
+
+## Documentation Files
+
+The `docs/` directory contains summary documents:
+
+| File                    | Description                                                                   |
+| ----------------------- | ----------------------------------------------------------------------------- |
+| `experiment_summary.md` | Summary of experimental setup, results, baselines, ablations, and limitations |
+| `error_analysis.md`     | Qualitative error analysis for selected pipeline outputs                      |
 
 ## Main Experimental Results
 
