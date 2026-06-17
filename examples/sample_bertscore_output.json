@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "description": "Simplified example output from BERTScore evaluation.",
+    "bertscore_model": "bert-base-multilingual-cased",
+    "threshold": 0.85,
+    "num_samples": 3,
+    "note": "This file contains only a small sample for documentation. Full evaluation outputs are not included."
+  },
+  "original_metrics": {
+    "em": 63.11,
+    "f1": 75.67,
+    "retrieval": 93.16
+  },
+  "bertscore_metrics": {
+    "accuracy": 69.03,
+    "high_confidence_accuracy": 62.93,
+    "mean_f1": 0.9157,
+    "median_f1": 1.0,
+    "confidence_distribution": {
+      "high": 5034,
+      "medium": 1466,
+      "low": 1500
+    },
+    "discrepancies": {
+      "total": 757,
+      "false_negatives": 615,
+      "false_positives": 142
+    }
+  },
+  "threshold_analysis": {
+    "0.7": {
+      "accuracy": 93.51
+    },
+    "0.75": {
+      "accuracy": 88.48
+    },
+    "0.8": {
+      "accuracy": 81.25
+    },
+    "0.85": {
+      "accuracy": 69.03
+    },
+    "0.9": {
+      "accuracy": 62.93
+    },
+    "0.95": {
+      "accuracy": 58.64
+    }
+  },
+  "results": [
+    {
+      "question": "Yang mana dari berikut ini ditemukan di lebih banyak lokasi di dunia: Ozothamnus dan Ballota?",
+      "answer": "Ballota",
+      "predicted_answer": "Ballota",
+      "em": 1,
+      "f1": 1.0,
+      "bertscore": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "is_correct": true,
+        "confidence": "high"
+      },
+      "original_em": 1,
+      "original_f1": 1.0
+    },
+    {
+      "question": "Apakah Virginia Commonwealth University dan University of California publik atau swasta?",
+      "answer": "publik",
+      "predicted_answer": "keduanya publik",
+      "em": 0,
+      "f1": 0.6666666667,
+      "bertscore": {
+        "precision": 0.8498544693,
+        "recall": 0.8843981028,
+        "f1": 0.866782248,
+        "is_correct": true,
+        "confidence": "medium"
+      },
+      "original_em": 0,
+      "original_f1": 0.6666666667
+    },
+    {
+      "question": "Siapa yang hidup lebih lama, Cid Corman atau Katherine Mansfield?",
+      "answer": "Cid (Sidney) Corman",
+      "predicted_answer": "Cid Corman",
+      "em": 0,
+      "f1": 0.8,
+      "bertscore": {
+        "precision": 0.8976300359,
+        "recall": 0.7947740555,
+        "f1": 0.8430765271,
+        "is_correct": false,
+        "confidence": "medium"
+      },
+      "original_em": 0,
+      "original_f1": 0.8
+    }
+  ]
+}
