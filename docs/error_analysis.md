@@ -2,10 +2,7 @@
 
 Dokumen ini berisi contoh analisis error dari output full pipeline adaptive Indonesian multi-hop RAG.
 
-Tujuan dokumen ini adalah menyediakan contoh ringkas untuk:
-1. dokumentasi GitHub,
-2. lampiran tesis,
-3. analisis kualitatif hasil retrieval dan answer generation.
+Tujuan dokumen ini adalah menyediakan contoh ringkas untuk analisis kualitatif hasil retrieval dan answer generation.
 
 Contoh diambil dari output pipeline dengan format:
 - `question`
