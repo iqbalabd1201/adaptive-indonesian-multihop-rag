@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "description": "Simplified example output from the adaptive Indonesian multi-hop RAG pipeline.",
+    "num_samples": 3,
+    "generate_answers": true,
+    "gpt_model": "gpt-5-mini",
+    "note": "This file contains only a small sample for documentation. Full experiment outputs are not included."
+  },
+  "results": [
+    {
+      "question": "Yang mana dari berikut ini ditemukan di lebih banyak lokasi di dunia: Ozothamnus dan Ballota?",
+      "answer": "Ballota",
+      "true_complexity": "2-hop",
+      "predicted_complexity": "2-hop",
+      "path_used": "2-hop (HotpotQA)",
+      "retrieved_indices": [3, 6],
+      "gold_indices": [3, 6],
+      "all_correct": true,
+      "predicted_answer": "Ballota",
+      "em": 1,
+      "f1": 1.0
+    },
+    {
+      "question": "Apakah Virginia Commonwealth University dan University of California publik atau swasta?",
+      "answer": "publik",
+      "true_complexity": "2-hop",
+      "predicted_complexity": "2-hop",
+      "path_used": "2-hop (HotpotQA)",
+      "retrieved_indices": [8, 2],
+      "gold_indices": [8, 2],
+      "all_correct": true,
+      "predicted_answer": "keduanya publik",
+      "em": 0,
+      "f1": 0.6666666666666666,
+      "note": "Exact Match is 0 because the wording differs, but the prediction is semantically close to the reference answer."
+    },
+    {
+      "question": "Majalah mana yang dimulai pada tanggal sebelumnya, Sejarah Angkatan Laut atau The Open Road for Boys?",
+      "answer": "Jalan Terbuka untuk Anak Laki-Laki",
+      "true_complexity": "2-hop",
+      "predicted_complexity": "2-hop",
+      "path_used": "2-hop (HotpotQA)",
+      "retrieved_indices": [6, 0],
+      "gold_indices": [4, 6],
+      "all_correct": false,
+      "predicted_answer": "Jalan Terbuka untuk Anak Laki-Laki",
+      "em": 1,
+      "f1": 1.0,
+      "note": "The generated answer is correct even though retrieval did not retrieve all gold documents."
+    }
+  ]
+}
