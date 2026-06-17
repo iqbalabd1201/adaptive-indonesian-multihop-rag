@@ -1,0 +1,74 @@
+{
+  "metadata": {
+    "description": "Simplified example output from LLM-as-Judge evaluation.",
+    "judge_model": "gpt-4o-mini",
+    "num_samples": 3,
+    "note": "This file contains only a small sample for documentation. Full evaluation outputs are not included."
+  },
+  "original_metrics": {
+    "em": 63.11,
+    "f1": 75.67,
+    "retrieval": 93.16
+  },
+  "llm_judge_metrics": {
+    "accuracy": 88.61,
+    "high_confidence_accuracy": 88.35,
+    "confidence_distribution": {
+      "high": 7967,
+      "medium": 33,
+      "low": 0
+    },
+    "discrepancies": {
+      "total": 2060,
+      "false_negatives": 2050,
+      "false_positives": 10
+    }
+  },
+  "results": [
+    {
+      "question": "Yang mana dari berikut ini ditemukan di lebih banyak lokasi di dunia: Ozothamnus dan Ballota?",
+      "answer": "Ballota",
+      "predicted_answer": "Ballota",
+      "em": 1,
+      "f1": 1.0,
+      "llm_judgment": {
+        "is_correct": true,
+        "reasoning": "Jawaban prediksi 'Ballota' sama dengan jawaban ground truth 'Ballota', sehingga informasi inti sama.",
+        "confidence": "high"
+      },
+      "llm_correct": true,
+      "original_em": 1,
+      "original_f1": 1.0
+    },
+    {
+      "question": "Apakah Virginia Commonwealth University dan University of California publik atau swasta?",
+      "answer": "publik",
+      "predicted_answer": "keduanya publik",
+      "em": 0,
+      "f1": 0.6666666667,
+      "llm_judgment": {
+        "is_correct": true,
+        "reasoning": "Jawaban prediksi menyatakan bahwa kedua universitas adalah publik, yang sesuai dengan jawaban ground truth yang menyatakan 'publik'.",
+        "confidence": "high"
+      },
+      "llm_correct": true,
+      "original_em": 0,
+      "original_f1": 0.6666666667
+    },
+    {
+      "question": "Siapa yang hidup lebih lama, Cid Corman atau Katherine Mansfield?",
+      "answer": "Cid (Sidney) Corman",
+      "predicted_answer": "Cid Corman",
+      "em": 0,
+      "f1": 0.8,
+      "llm_judgment": {
+        "is_correct": true,
+        "reasoning": "Jawaban prediksi 'Cid Corman' adalah nama yang sama dengan 'Cid (Sidney) Corman', sehingga informasi inti sama.",
+        "confidence": "high"
+      },
+      "llm_correct": true,
+      "original_em": 0,
+      "original_f1": 0.8
+    }
+  ]
+}
