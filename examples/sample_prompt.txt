@@ -1,0 +1,59 @@
+Example Prompt for Answer Generation
+
+This file provides simplified examples of the prompt format used in the answer generation stage.
+
+The actual experiment used retrieved supporting documents from the adaptive retrieval pipeline.
+
+============================================================
+2-Hop Question Answering Prompt
+============================================================
+
+Instruction:
+Based on the question and the two supporting documents, provide a short and precise answer in Indonesian.
+
+Question:
+Grup mana yang bermain di festival yang lebih terkenal, Cowboy Junkies atau Matt dan Kim?
+
+Document 1:
+Cowboy Junkies adalah band country alternatif Kanada yang dibentuk oleh Michael Timmins, Margo Timmins, Peter Timmins, dan Alan Anton.
+
+Document 2:
+Matt dan Kim adalah duo indie elektronik Amerika dari Brooklyn, New York. Mereka dikenal karena penampilan langsung yang energik dan tampil di berbagai festival musik.
+
+Answer:
+Matt dan Kim
+
+============================================================
+4-Hop Question Answering Prompt
+============================================================
+
+Instruction:
+Based on the question and the four supporting documents, provide a short and precise answer in Indonesian.
+
+Question:
+Apakah sutradara kedua film Tanya's Island dan Madhurappathinezhu berasal dari negara yang sama?
+
+Document 1:
+Tanya's Island adalah film fantasi Kanada-Amerika tahun 1980 yang disutradarai oleh Alfred Sole.
+
+Document 2:
+Alfred Sole adalah seorang sutradara, produser, dan desainer produksi Amerika.
+
+Document 3:
+Madhurappathinezhu adalah film Malayalam India tahun 1975 yang disutradarai oleh Hariharan.
+
+Document 4:
+Hariharan adalah sutradara film India yang telah menyutradarai banyak film Malayalam.
+
+Answer:
+tidak
+
+============================================================
+Prompt Rules
+============================================================
+
+1. The answer must be written in Indonesian.
+2. The answer should be short, usually one to five words.
+3. The answer should not include explanations.
+4. The answer should be based only on the retrieved documents.
+5. For yes/no questions, use "ya", "tidak", or another concise Indonesian answer.
