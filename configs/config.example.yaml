@@ -1,0 +1,30 @@
+# Example configuration for Adaptive Indonesian Multi-Hop RAG
+# Replace all paths with your local or cloud storage paths.
+
+data:
+  hotpot_2hop_eval: "path/to/val_4k_nllb13b_id.json"
+  wiki_4hop_eval: "path/to/test_4hop_4k_nllb13b_id_with_labels.json"
+
+models:
+  classifier_model: "path/to/bert_hierarchical_indonesian_only.pt"
+  retrieval_2hop_stage1: "path/to/first_hop_binary/best_model"
+  retrieval_2hop_stage2: "path/to/second_hop_contextual/best_model"
+  retrieval_4hop_ranking: "path/to/2wiki_finetuned_ranking/best_model"
+
+parameters:
+  num_samples: 8000
+  max_seq_length: 512
+  batch_size: 16
+
+answer_generation:
+  enabled: true
+  model_name: "gpt-5-mini"
+  api_key_env: "OPENAI_API_KEY"
+
+evaluation:
+  lexical_metrics:
+    - exact_match
+    - f1_score
+  semantic_metrics:
+    - bertscore
+    - llm_as_judge
