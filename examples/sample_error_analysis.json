@@ -1,0 +1,121 @@
+{
+  "metadata": {
+    "description": "Sample error analysis cases from the adaptive Indonesian multi-hop RAG pipeline.",
+    "source": "pipeline_with_answers_20260105_230942.json",
+    "note": "This file contains selected qualitative examples for GitHub documentation and thesis appendix."
+  },
+  "error_categories": [
+    {
+      "category": "lexical_mismatch",
+      "definition": "Retrieval is correct, but Exact Match is 0 because the predicted answer differs lexically from the reference answer.",
+      "sample": {
+        "question": "Apakah Virginia Commonwealth University dan University of California publik atau swasta?",
+        "answer": "publik",
+        "predicted_answer": "keduanya publik",
+        "true_complexity": "2-hop",
+        "predicted_complexity": "2-hop",
+        "path_used": "2-hop (HotpotQA)",
+        "retrieved_indices": [
+          8,
+          2
+        ],
+        "gold_indices": [
+          8,
+          2
+        ],
+        "all_correct": true,
+        "em": 0,
+        "f1": 0.6666666666666666,
+        "analysis": "The prediction is semantically correct because it states that both universities are public, but Exact Match marks it as incorrect because the wording differs."
+      }
+    },
+    {
+      "category": "entity_name_variation",
+      "definition": "The predicted answer and reference answer refer to the same entity but use different name forms.",
+      "sample": {
+        "question": "Siapa yang hidup lebih lama, Cid Corman atau Katherine Mansfield?",
+        "answer": "Cid (Sidney) Corman",
+        "predicted_answer": "Cid Corman",
+        "true_complexity": "2-hop",
+        "predicted_complexity": "2-hop",
+        "path_used": "2-hop (HotpotQA)",
+        "retrieved_indices": [
+          8,
+          0
+        ],
+        "gold_indices": [
+          0,
+          8
+        ],
+        "all_correct": true,
+        "em": 0,
+        "f1": 0.8,
+        "analysis": "The predicted answer refers to the same person as the reference answer, but the middle name is omitted."
+      }
+    },
+    {
+      "category": "translation_variation",
+      "definition": "The predicted answer and reference answer differ because of translation variation.",
+      "sample": {
+        "question": "Siapa yang beroperasi di sebagian besar negara di seluruh dunia, Dollar Tree atau PPG Industries?",
+        "answer": "Industri PPG",
+        "predicted_answer": "PPG Industries",
+        "true_complexity": "2-hop",
+        "predicted_complexity": "2-hop",
+        "path_used": "2-hop (HotpotQA)",
+        "retrieved_indices": [
+          1,
+          9
+        ],
+        "gold_indices": [
+          1,
+          9
+        ],
+        "all_correct": true,
+        "em": 0,
+        "f1": 0.5,
+        "analysis": "Both answers refer to the same company, but one is translated into Indonesian while the other keeps the English name."
+      }
+    },
+    {
+      "category": "retrieval_incomplete_but_answer_correct",
+      "definition": "The system does not retrieve all gold documents, but the generated answer is still correct.",
+      "sample": {
+        "question": "Majalah mana yang dimulai pada tanggal sebelumnya, Sejarah Angkatan Laut atau The Open Road for Boys?",
+        "answer": "Jalan Terbuka untuk Anak Laki-Laki",
+        "predicted_answer": "Jalan Terbuka untuk Anak Laki-Laki",
+        "true_complexity": "2-hop",
+        "predicted_complexity": "2-hop",
+        "path_used": "2-hop (HotpotQA)",
+        "retrieved_indices": [
+          6,
+          0
+        ],
+        "gold_indices": [
+          4,
+          6
+        ],
+        "all_correct": false,
+        "em": 1,
+        "f1": 1.0,
+        "analysis": "The retrieval step misses one gold document, but the retrieved evidence still contains enough information to produce the correct answer."
+      }
+    },
+    {
+      "category": "wrong_answer_despite_correct_retrieval",
+      "definition": "The system retrieves the correct documents, but answer generation selects the wrong entity.",
+      "sample": {
+        "question": "Siapa yang baru-baru ini memenangkan Hadiah Nobel Sastra, Jacinto Benavente y Martínez atau Rohinton Mistry?",
+        "answer": "Rohinton Mistry",
+        "predicted_answer": "Jacinto Benavente y Martínez",
+        "true_complexity": "2-hop",
+        "predicted_complexity": "2-hop",
+        "path_used": "2-hop (HotpotQA)",
+        "all_correct": true,
+        "em": 0,
+        "f1": 0,
+        "analysis": "Although the relevant documents are retrieved, the answer generation step selects the wrong entity."
+      }
+    }
+  ]
+}
