@@ -1,0 +1,12 @@
+torch
+transformers
+numpy
+pandas
+scikit-learn
+tqdm
+PySastrawi
+openai
+bert-score
+sentence-transformers
+rank-bm25
+PyYAML
