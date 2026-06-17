@@ -1,12 +1,12 @@
 # Adaptive Indonesian Multi-Hop RAG
 
-This repository contains code artifacts for an adaptive Retrieval-Augmented Generation (RAG) system for Indonesian multi-hop question answering.
+This repository contains cleaned code artifacts for an adaptive Retrieval-Augmented Generation (RAG) system for Indonesian multi-hop question answering.
 
-The system is designed to handle different reasoning complexities by routing questions into different retrieval strategies:
+The system handles different reasoning complexities using adaptive routing:
 
 * **2-hop questions** use two-stage sequential retrieval.
 * **4-hop questions** use ranking-based retrieval with transfer learning.
-* Retrieved documents are then used for answer generation and evaluated with lexical and semantic metrics.
+* Retrieved documents are used for answer generation and evaluated with lexical and semantic metrics.
 
 ## Research Overview
 
@@ -43,7 +43,9 @@ adaptive-indonesian-multihop-rag/
 │   └── evaluate_llm_judge.py
 ├── examples/
 │   ├── sample_prompt.txt
-│   └── sample_output.json
+│   ├── sample_output.json
+│   ├── sample_bertscore_output.json
+│   └── sample_llm_judge_output.json
 └── docs/
     └── experiment_summary.md
 ```
@@ -282,6 +284,12 @@ python src/evaluate_bertscore.py \
   --output outputs/bertscore_results.json
 ```
 
+Example output:
+
+```text
+examples/sample_bertscore_output.json
+```
+
 ## 8. Semantic Evaluation with LLM-as-Judge
 
 LLM-as-Judge is used to evaluate whether generated answers are semantically correct.
@@ -309,6 +317,25 @@ python src/evaluate_llm_judge.py \
   --output outputs/llm_judge_results.json
 ```
 
+Example output:
+
+```text
+examples/sample_llm_judge_output.json
+```
+
+## Example Files
+
+The `examples/` directory provides small documentation-only samples:
+
+| File                           | Description                             |
+| ------------------------------ | --------------------------------------- |
+| `sample_prompt.txt`            | Example answer generation prompt format |
+| `sample_output.json`           | Example full-pipeline output            |
+| `sample_bertscore_output.json` | Example BERTScore evaluation output     |
+| `sample_llm_judge_output.json` | Example LLM-as-Judge evaluation output  |
+
+Full experiment outputs are not included because they contain 8,000 samples and may include long retrieved contexts.
+
 ## Main Experimental Results
 
 | Component                                | Result |
@@ -322,6 +349,18 @@ python src/evaluate_llm_judge.py \
 | BERTScore accuracy                       | 69.03% |
 | LLM-as-Judge accuracy                    | 88.61% |
 
+## Baseline Comparison
+
+| Method                   | Overall Retrieval Accuracy |
+| ------------------------ | -------------------------: |
+| TF-IDF K=3               |                     64.14% |
+| BM25 K=3                 |                     66.46% |
+| DPR K=3                  |                     82.90% |
+| DPR K=4                  |                     87.31% |
+| Proposed adaptive method |                     93.16% |
+
+The proposed adaptive method outperformed the best baseline, DPR K=4, by **5.85 percentage points**.
+
 ## Notes
 
 This repository contains cleaned code artifacts for research documentation. The following files are not included:
@@ -330,10 +369,19 @@ This repository contains cleaned code artifacts for research documentation. The 
 * Model checkpoints
 * Google Drive paths
 * API keys
+* Full 8,000-sample experiment outputs
 * Long experiment logs
-* Temporary checkpoint outputs
+* Temporary checkpoint files
 
 To reproduce the full experiment, users need to prepare the translated datasets, trained checkpoints, and local configuration paths.
+
+## Security Notice
+
+Do not commit API keys, private Google Drive paths, or raw Colab notebooks containing credentials. Use environment variables such as:
+
+```bash
+export OPENAI_API_KEY="your_api_key_here"
+```
 
 ## Citation
 
