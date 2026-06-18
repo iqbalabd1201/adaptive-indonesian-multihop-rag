@@ -122,11 +122,11 @@ The proposed method outperformed the best baseline, DPR K=4, by **5.85 percentag
 
 ### 8.1 Fixed-K Retrieval vs Adaptive Routing
 
-| Setting | Overall | 2-Hop | 4-Hop |
+| Setting | Overall Retrieval EM | 2-Hop Retrieval EM | 4-Hop Retrieval EM |
 |---|---:|---:|---:|
-| Fixed K=2 | 67.85% | 89.60% | 46.10% |
-| Fixed K=3 | 81.70% | 93.15% | 70.25% |
-| Fixed K=4 | 87.31% | 93.58% | 81.03% |
+| Fixed K=2 | 31.19% | 62.65% | 0.00% |
+| Fixed K=3 | 38.67% | 77.68% | 0.00% |
+| Fixed K=4 | 90.97% | 85.12% | 96.78% |
 | Proposed adaptive method | 93.16% | 89.60% | 96.73% |
 
 Adaptive routing improves performance because it allows the system to retrieve a different number of supporting documents depending on question complexity.
