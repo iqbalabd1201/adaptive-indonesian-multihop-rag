@@ -414,11 +414,3 @@ This repository contains cleaned code artifacts for research documentation. The 
 * Temporary checkpoint files
 
 To reproduce the full experiment, users need to prepare the translated datasets, trained checkpoints, and local configuration paths.
-
-## Security Notice
-
-Do not commit API keys, private Google Drive paths, or raw Colab notebooks containing credentials. Use environment variables such as:
-
-```bash
-export OPENAI_API_KEY="your_api_key_here"
-```
