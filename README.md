@@ -422,12 +422,3 @@ Do not commit API keys, private Google Drive paths, or raw Colab notebooks conta
 ```bash
 export OPENAI_API_KEY="your_api_key_here"
 ```
-
-## Citation
-
-If you use this repository, please cite the related thesis or research work:
-
-```text
-Iqbal Abdul Rahman. Adaptive Retrieval-Augmented Generation for Indonesian Multi-Hop Question Answering.
-Master Thesis, 2026.
-```
