@@ -20,7 +20,7 @@ The main pipeline consists of:
 4. Adaptive retrieval based on predicted complexity.
 5. Answer generation using retrieved supporting documents.
 6. Evaluation using Exact Match, F1-score, BERTScore, and LLM-as-Judge.
-7. Error analysis for qualitative evaluation.
+7. Ablation study and error analysis.
 
 ## Repository Structure
 
@@ -41,7 +41,8 @@ adaptive-indonesian-multihop-rag/
 │   ├── train_retrieval_4hop.py
 │   ├── run_full_pipeline.py
 │   ├── evaluate_bertscore.py
-│   └── evaluate_llm_judge.py
+│   ├── evaluate_llm_judge.py
+│   └── run_ablation_studies.py
 ├── examples/
 │   ├── sample_prompt.txt
 │   ├── sample_pipeline_output.json
@@ -50,6 +51,7 @@ adaptive-indonesian-multihop-rag/
 │   └── sample_error_analysis.json
 └── docs/
     ├── experiment_summary.md
+    ├── experiment_artifacts.md
     └── error_analysis.md
 ```
 
@@ -91,7 +93,7 @@ python src/translate_2wiki.py \
   --train-output data/2wiki/training_backup_4hop_16k_nllb13b_id.json
 ```
 
-## 2. Text Preprocessing
+### 2. Text Preprocessing
 
 Indonesian text preprocessing is performed using Sastrawi stemming.
 
@@ -127,7 +129,7 @@ python src/preprocess_2wiki.py \
   --output-dir data/2wiki_stemmed
 ```
 
-## 3. Query Complexity Classification
+### 3. Query Complexity Classification
 
 A BERT-based classifier predicts whether a question is 2-hop or 4-hop.
 
@@ -162,7 +164,7 @@ python src/train_classifier.py \
   --output-model models/bert_hierarchical_indonesian_only.pt
 ```
 
-## 4. 2-Hop Retrieval Training
+### 4. 2-Hop Retrieval Training
 
 The 2-hop retrieval path uses two-stage sequential retrieval.
 
@@ -173,7 +175,7 @@ src/train_retrieval_2hop_stage1.py
 src/train_retrieval_2hop_stage2.py
 ```
 
-### Stage 1: First-Hop Retrieval
+#### Stage 1: First-Hop Retrieval
 
 The first model retrieves one supporting document from the candidate documents.
 
@@ -186,7 +188,7 @@ python src/train_retrieval_2hop_stage1.py \
   --output-dir models/first_hop_binary
 ```
 
-### Stage 2: Second-Hop Retrieval
+#### Stage 2: Second-Hop Retrieval
 
 The second model retrieves the next supporting document using the question and the first retrieved document as context.
 
@@ -199,7 +201,7 @@ python src/train_retrieval_2hop_stage2.py \
   --output-dir models/second_hop_contextual
 ```
 
-## 5. 4-Hop Retrieval Training
+### 5. 4-Hop Retrieval Training
 
 The 4-hop path uses ranking-based retrieval to select four supporting documents.
 
@@ -226,7 +228,7 @@ python src/train_retrieval_4hop.py \
   --init-checkpoint models/first_hop_binary/model.pt
 ```
 
-## 6. Full Pipeline Evaluation
+### 6. Full Pipeline Evaluation
 
 The full pipeline combines classification, adaptive routing, retrieval, answer generation, and evaluation.
 
@@ -266,9 +268,9 @@ Example output:
 examples/sample_pipeline_output.json
 ```
 
-Note: The public artifact provides the cleaned pipeline structure. Local paths, checkpoints, datasets, and API keys are intentionally excluded.
+Note: The public repository provides cleaned pipeline code and sample outputs. Full datasets, trained checkpoints, and complete experiment outputs are stored externally as experiment artifacts.
 
-## 7. Semantic Evaluation with BERTScore
+### 7. Semantic Evaluation with BERTScore
 
 BERTScore is used to evaluate semantic similarity between predicted answers and reference answers.
 
@@ -299,7 +301,7 @@ Example output:
 examples/sample_bertscore_output.json
 ```
 
-## 8. Semantic Evaluation with LLM-as-Judge
+### 8. Semantic Evaluation with LLM-as-Judge
 
 LLM-as-Judge is used to evaluate whether generated answers are semantically correct.
 
@@ -332,7 +334,37 @@ Example output:
 examples/sample_llm_judge_output.json
 ```
 
-## 9. Error Analysis
+### 9. Ablation Studies
+
+Ablation studies are used to evaluate the contribution of key retrieval components.
+
+File:
+
+```text
+src/run_ablation_studies.py
+```
+
+The script supports:
+
+* fixed-K vs adaptive routing,
+* 2-hop single-stage retrieval ablation,
+* zero-shot transfer from 2-hop to 4-hop retrieval,
+* stemming ablation summary.
+
+Example:
+
+```bash
+python src/run_ablation_studies.py fixed-k \
+  --hotpot-file data/hotpot_eval.json \
+  --wiki-file data/2wiki_eval.json \
+  --model-dir models/2wiki_ranking \
+  --adaptive-results-file outputs/adaptive_retrieval_results.json \
+  --output outputs/fixed_k_ablation_results.json
+```
+
+The fixed-K ablation uses retrieval exact match as the main metric. A sample is counted as correct only when all gold supporting documents are retrieved.
+
+### 10. Error Analysis
 
 Error analysis is used to inspect qualitative cases from the full pipeline output.
 
@@ -365,16 +397,35 @@ The `examples/` directory provides small documentation-only samples:
 | `sample_llm_judge_output.json` | Example LLM-as-Judge evaluation output   |
 | `sample_error_analysis.json`   | Example qualitative error analysis cases |
 
-Full experiment outputs are not included because they contain 8,000 samples and may include long retrieved contexts.
-
 ## Documentation Files
 
 The `docs/` directory contains summary documents:
 
-| File                    | Description                                                                   |
-| ----------------------- | ----------------------------------------------------------------------------- |
-| `experiment_summary.md` | Summary of experimental setup, results, baselines, ablations, and limitations |
-| `error_analysis.md`     | Qualitative error analysis for selected pipeline outputs                      |
+| File                      | Description                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------ |
+| `experiment_summary.md`   | Summary of experimental setup, results, baselines, ablations, and limitations              |
+| `experiment_artifacts.md` | Description and external link for datasets, model checkpoints, and full experiment outputs |
+| `error_analysis.md`       | Qualitative error analysis for selected pipeline outputs                                   |
+
+## Experiment Artifacts
+
+Complete experiment artifacts are stored externally to keep this repository lightweight.
+
+Artifact documentation:
+
+```text
+docs/experiment_artifacts.md
+```
+
+The external artifact folder contains:
+
+* raw English dataset files,
+* Indonesian translated datasets,
+* stemmed Indonesian datasets,
+* trained model checkpoints,
+* full pipeline outputs,
+* BERTScore evaluation outputs,
+* LLM-as-Judge evaluation outputs.
 
 ## Main Experimental Results
 
@@ -401,16 +452,27 @@ The `docs/` directory contains summary documents:
 
 The proposed adaptive method outperformed the best baseline, DPR K=4, by **5.85 percentage points**.
 
+## Ablation Summary
+
+| Ablation                              | Main Result                                                                                             |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Fixed-K vs adaptive routing           | Proposed method improves retrieval exact match by 2.19 percentage points over the best fixed-K setting. |
+| 2-hop single-stage retrieval          | Retrieving both gold documents in one step is harder than retrieving at least one gold document.        |
+| Stemming                              | Stemming improves Indonesian retrieval by 37.53 percentage points.                                      |
+| Transfer learning for 4-hop retrieval | Fine-tuning improves 4-hop retrieval by 73.38 percentage points over zero-shot transfer.                |
+
 ## Notes
 
-This repository contains cleaned code artifacts for research documentation. The following files are not included:
+This repository contains cleaned code artifacts and documentation for research reproducibility. The following items are not stored directly in the repository:
 
-* Full datasets
-* Model checkpoints
-* Google Drive paths
-* API keys
-* Full 8,000-sample experiment outputs
-* Long experiment logs
-* Temporary checkpoint files
+* full datasets,
+* trained model checkpoints,
+* full 8,000-sample experiment outputs,
+* long experiment logs,
+* temporary checkpoint files
 
-To reproduce the full experiment, users need to prepare the translated datasets, trained checkpoints, and local configuration paths.
+Full datasets, trained checkpoints, and complete output files are documented in:
+
+```text
+docs/experiment_artifacts.md
+```
