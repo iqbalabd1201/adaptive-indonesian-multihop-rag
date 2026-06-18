@@ -466,12 +466,10 @@ The proposed adaptive method outperformed the best baseline, DPR K=4, by **5.85 
 This repository contains cleaned code artifacts and documentation for research reproducibility. The following items are not stored directly in the repository:
 
 * full datasets,
-* trained model checkpoints,
-* full 8,000-sample experiment outputs,
-* long experiment logs,
-* temporary checkpoint files
+* trained models,
+* full 8,000-sample experiment outputs
 
-Full datasets, trained checkpoints, and complete output files are documented in:
+Full datasets, trained models, and complete output files are documented in:
 
 ```text
 docs/experiment_artifacts.md
